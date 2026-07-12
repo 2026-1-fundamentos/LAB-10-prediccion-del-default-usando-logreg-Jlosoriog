@@ -26,7 +26,7 @@ def clean_dataset(df):
         columns={"default payment next month": "default"}
     )
 
-    df = df.drop(columns=["ID"])
+    df = df.drop(columns=["ID"]) # ccdide
 
     df = df.dropna()
 
