@@ -1,7 +1,7 @@
 import gzip
 import json
 import pickle
-
+import os
 import pandas as pd
 from sklearn.compose import ColumnTransformer
 from sklearn.feature_selection import SelectKBest, f_classif
@@ -29,8 +29,8 @@ def clean_dataset(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-train_df = pd.read_csv("files/input/train_default_of_credit_card_clients.csv")
-test_df = pd.read_csv("files/input/test_default_of_credit_card_clients.csv")
+train_df = pd.read_csv("files/input/train_data/train_default_of_credit_card_clients.csv")
+test_df = pd.read_csv("files/input/test_data/test_default_of_credit_card_clients.csv")
 
 train_df = clean_dataset(train_df)
 test_df = clean_dataset(test_df)
@@ -77,6 +77,9 @@ model = GridSearchCV(
 )
 
 model.fit(x_train, y_train)
+
+os.makedirs("files/models", exist_ok=True)
+os.makedirs("files/output", exist_ok=True)
 
 with gzip.open("files/models/model.pkl.gz", "wb") as f:
     pickle.dump(model, f)
